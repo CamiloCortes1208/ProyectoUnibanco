@@ -1,6 +1,7 @@
 package com.example.proyectounibanco.controller;
 
 import static com.example.proyectounibanco.controller.AppController.INSTANCE;
+import static com.example.proyectounibanco.util.VentanaUtil.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,9 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-
-import static com.example.proyectounibanco.util.VentanaUtil.cambiarVentana;
-import static com.example.proyectounibanco.util.VentanaUtil.mostrarMensaje;
 
 public class VentanaLoginAdministradorController {
 
@@ -30,14 +28,14 @@ public class VentanaLoginAdministradorController {
     @FXML
     void ingresar(ActionEvent event) throws IOException {
         if(tfCorreo.getText().isEmpty()){
-            mostrarMensaje("Debe ingresar un correo");
+            mostrarMensajeAlerta("Debe ingresar un correo");
         }
         else if(tfContrasenia.getText().isEmpty()){
-            mostrarMensaje("Debe ingresar una contraseña");
+            mostrarMensajeAlerta("Debe ingresar una contraseña");
         }
         else if(!INSTANCE.getBanco().getAdministrador().getContrasenia().equals(tfContrasenia.getText())
         || !INSTANCE.getBanco().getAdministrador().getCorreo().equals(tfCorreo.getText())){
-            mostrarMensaje("Correo o contraseña incorrectos");
+            mostrarMensajeAlerta("Correo o contraseña incorrectos");
         }
         else if(INSTANCE.getBanco().getAdministrador().getCorreo().equals(tfCorreo.getText()) &&
         INSTANCE.getBanco().getAdministrador().getContrasenia().equals(tfContrasenia.getText())){

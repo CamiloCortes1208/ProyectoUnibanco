@@ -21,10 +21,16 @@ public class VentanaUtil {
         button.getScene().getWindow().hide();
         stage.show();
     }
-    public static void mostrarMensaje(String mensaje){
+    public static void mostrarMensajeAlerta(String mensaje){
         Alert alerta = new Alert(Alert.AlertType.WARNING);
         alerta.setTitle("Error");
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+    public static void mostrarMensajeInformacion(String titulo,String mensaje){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }
