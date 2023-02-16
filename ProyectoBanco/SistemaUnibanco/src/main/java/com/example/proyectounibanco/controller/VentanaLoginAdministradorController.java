@@ -12,12 +12,14 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class VentanaLoginAdministradorController {
-
     @FXML
     private Button botonIngresar;
 
     @FXML
     private Button botonRegistrar;
+
+    @FXML
+    private Button botonRegresar;
 
     @FXML
     private PasswordField tfContrasenia;
@@ -48,6 +50,12 @@ public class VentanaLoginAdministradorController {
     void registrar(ActionEvent event) throws IOException {
         cambiarVentana("VentanaCreacionAdministrador.fxml","Crea tu cuenta",
                 400,250,botonRegistrar);
+    }
+
+    @FXML
+    void regresar(ActionEvent event) throws IOException {
+        cambiarVentana("VentanaInicial.fxml","UNIBANCO",
+                310,130,botonRegresar);
     }
 
 }

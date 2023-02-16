@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="130.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectounibanco.controller.VentanaInicialController">
+   <children>
+      <Label layoutX="41.0" layoutY="14.0" text="Bienvenido, seleccione su tipo de usuario">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="botonAdministrador" layoutX="109.0" layoutY="53.0" mnemonicParsing="false" onAction="#ingresarAdministrador" text="Administrador" />
+      <Button fx:id="botonCliente" layoutX="131.0" layoutY="91.0" mnemonicParsing="false" onAction="#ingresarCliente" text="Cliente" />
+   </children>
+</AnchorPane>

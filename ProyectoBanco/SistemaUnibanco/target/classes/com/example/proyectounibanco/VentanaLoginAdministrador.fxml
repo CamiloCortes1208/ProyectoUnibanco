@@ -34,5 +34,6 @@
       </GridPane>
       <Button fx:id="botonIngresar" layoutX="158.0" layoutY="159.0" mnemonicParsing="false" onAction="#ingresar" text="Iniciar sesión" />
       <Button fx:id="botonRegistrar" layoutX="163.0" layoutY="193.0" mnemonicParsing="false" onAction="#registrar" text="Registrarse" />
+      <Button fx:id="botonRegresar" layoutX="14.0" layoutY="211.0" mnemonicParsing="false" onAction="#regresar" text="Regresar" />
    </children>
 </AnchorPane>

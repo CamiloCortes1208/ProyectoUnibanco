@@ -46,7 +46,8 @@ public class VentanaCreacionAdministradorController {
 
     @FXML
     void regresar(ActionEvent event) throws IOException {
-        cambiarVentana("VentanaLoginAdministrador.fxml","UNIBANCO",400,250,botonRegresar);
+        cambiarVentana("VentanaLoginAdministrador.fxml","Ingreso Administrador",
+                400,250,botonRegresar);
     }
 
 }
