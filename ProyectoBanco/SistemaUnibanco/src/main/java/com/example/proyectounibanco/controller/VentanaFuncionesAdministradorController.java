@@ -17,33 +17,18 @@ public class VentanaFuncionesAdministradorController {
     private Button botonCuentas;
 
     @FXML
-    private Button botonRegistroCliente;
-
-    @FXML
     private Button botonRegresar;
 
     @FXML
-    private Button botonTransaccion;
-
-    @FXML
-    void registrarCliente(ActionEvent event) {
-
-    }
-
-    @FXML
-    void registrarTransaccion(ActionEvent event) {
-
-    }
-
-    @FXML
     void regresar(ActionEvent event) throws IOException {
-        cambiarVentana("VentanaLoginAdministrador.fxml","Administrador",
-                400,250,botonRegresar);
+        cambiarVentana("VentanaLoginAdministrador.fxml",
+                "UNIBANCO",400,250,botonRegresar);
     }
 
     @FXML
-    void verClientes(ActionEvent event) {
-
+    void verClientes(ActionEvent event) throws IOException {
+        cambiarVentana("VentanaListaClientes.fxml",
+                "Clientes",700,500,botonClientes);
     }
 
     @FXML
@@ -52,3 +37,4 @@ public class VentanaFuncionesAdministradorController {
     }
 
 }
+

@@ -11,8 +11,6 @@ public class Banco {
 
     public Banco(Administrador administrador) {
         this.nombre = "Unibanco";
-        this.listaClientes = new ArrayList<>();;
-        this.listaCuentas = new ArrayList<>();
         this.administrador = administrador;
     }
 

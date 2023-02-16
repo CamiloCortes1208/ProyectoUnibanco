@@ -40,7 +40,7 @@ public class VentanaLoginAdministradorController {
         else if(INSTANCE.getBanco().getAdministrador().getCorreo().equals(tfCorreo.getText()) &&
         INSTANCE.getBanco().getAdministrador().getContrasenia().equals(tfContrasenia.getText())){
             cambiarVentana("VentanaFuncionesAdministrador.fxml","Administrador",
-                    350,240,botonIngresar);
+                    350,170,botonIngresar);
         }
     }
 

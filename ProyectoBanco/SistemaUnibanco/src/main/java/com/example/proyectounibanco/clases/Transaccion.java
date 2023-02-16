@@ -1,17 +1,15 @@
 package com.example.proyectounibanco.clases;
 
-import com.example.proyectounibanco.clases.ESTADO_TRANSACCION;
-
 public class Transaccion {
     private String codigoTransaccion;
     private double valor;
     private String hora;
-    private String tipoTransaccion;
+    private TIPO_TRANSACCION tipoTransaccion;
     private String fecha;
     private ESTADO_TRANSACCION estadoTransaccion;
 
     public Transaccion(String codigoTransaccion, double valor, String hora,
-                       String tipoTransaccion, String fecha,
+                       TIPO_TRANSACCION tipoTransaccion, String fecha,
                        ESTADO_TRANSACCION estadoTransaccion) throws Exception {
         if (codigoTransaccion.isEmpty()){
             throw new Exception("El código de la transacción no puede estar vacío");
@@ -28,9 +26,6 @@ public class Transaccion {
             throw new Exception("Debe registrar una hora de transaccion");
         }
         this.hora = hora;
-        if(tipoTransaccion.isEmpty()){
-            throw new Exception("El tipo de transacción no puede estar vacío");
-        }
         this.tipoTransaccion = tipoTransaccion;
         if(fecha.isEmpty()){
             throw new Exception("Debe registrar una fecha de transacción");
@@ -63,11 +58,11 @@ public class Transaccion {
         this.hora = hora;
     }
 
-    public String getTipoTransaccion() {
+    public TIPO_TRANSACCION getTipoTransaccion() {
         return tipoTransaccion;
     }
 
-    public void setTipoTransaccion(String tipoTransaccion) {
+    public void setTipoTransaccion(TIPO_TRANSACCION tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
     }
 
