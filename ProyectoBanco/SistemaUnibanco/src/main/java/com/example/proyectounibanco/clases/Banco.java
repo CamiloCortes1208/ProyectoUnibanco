@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Banco {
     private String nombre;
-    private List<Cliente> listaClientes;
-    private List<Cuenta> listaCuentas;
+    private List<Cliente> listaClientes = new ArrayList<>();
+    private List<Cuenta> listaCuentas = new ArrayList<>();
     private final Administrador administrador;
 
     public Banco(Administrador administrador) {

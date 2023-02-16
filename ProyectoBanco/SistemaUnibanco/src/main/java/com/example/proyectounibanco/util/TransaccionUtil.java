@@ -11,6 +11,12 @@ public class TransaccionUtil {
     public static Predicate<Transaccion> buscarPorCodigoTransaccion(String codigoTransaccion) {
         return transaccion -> transaccion.getCodigoTransaccion().equals(codigoTransaccion);
     }
+    public static Predicate<Transaccion> buscarPorValor(double saldo){
+        return transaccion -> saldo == transaccion.getValor();
+    }
+    public static Predicate<Transaccion> buscarPorHora(String hora){
+        return transaccion -> transaccion.getHora().equals(hora);
+    }
     public static Predicate<Transaccion> buscarPorTipoTransaccion(TIPO_TRANSACCION tipoTransaccion){
         return transaccion -> transaccion.getTipoTransaccion().equals(tipoTransaccion);
     }

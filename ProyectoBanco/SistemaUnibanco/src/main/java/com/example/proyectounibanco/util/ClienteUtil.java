@@ -27,4 +27,34 @@ public class ClienteUtil {
     public static Predicate<Cliente> buscarPorTipoCuenta(TIPO_CUENTA tipoCuenta){
         return cliente -> cliente.getCuenta().getTipoCuenta().equals(tipoCuenta);
     }
+    public static Predicate<Cliente> buscarPorTodo(String nombre, String apellidos, String cedula,
+                                                   String direccion,String email, String numCuenta,
+                                                   TIPO_CUENTA tipoCuenta) {
+        Predicate<Cliente> predicado = empleado -> true;
+        if (nombre != null && !nombre.isEmpty()) {
+            predicado = predicado.and(buscarPorNombre(nombre));
+        }
+        if (apellidos != null && !apellidos.isEmpty()) {
+            predicado = predicado.and(buscarPorApellidos(apellidos));
+        }
+        if (cedula != null && !cedula.isEmpty()) {
+            predicado = predicado.and(buscarPorCedula(cedula));
+        }
+        if (direccion != null && !direccion.isEmpty()) {
+            predicado = predicado.and(buscarPorDireccion(direccion));
+        }
+        if (email != null && !email.isEmpty()) {
+            predicado = predicado.and(buscarPorEmail(email));
+        }
+        if (numCuenta != null && !numCuenta.isEmpty()) {
+            predicado = predicado.and(buscarPorNumCuenta(numCuenta));
+        }
+        if (email != null && !email.isEmpty()) {
+            predicado = predicado.and(buscarPorEmail(email));
+        }
+        if (tipoCuenta != null) {
+            predicado = predicado.and(buscarPorTipoCuenta(tipoCuenta));
+        }
+        return predicado;
+    }
 }

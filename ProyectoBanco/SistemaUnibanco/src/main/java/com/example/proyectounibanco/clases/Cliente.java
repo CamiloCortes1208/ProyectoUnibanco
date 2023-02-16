@@ -8,29 +8,33 @@ public class Cliente {
     private String email;
     private Cuenta cuenta;
 
-    public Cliente(String nombre, String apellidos, String cedula,
-                   String direccion, String email,Cuenta cuenta) throws Exception {
+    public Cliente(String nombre, String apellidos, String cedula, String direccion, String email, Cuenta cuenta) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.cedula = cedula;
+        this.direccion = direccion;
+        this.email = email;
+        this.cuenta = cuenta;
+    }
+
+    public static Cliente of(String nombre, String apellidos, String cedula,
+                    String direccion, String email, Cuenta cuenta) throws Exception {
         if(nombre.isEmpty()){
             throw new Exception("El nombre del cliente no puede estar vacío");
         }
-        this.nombre = nombre;
         if(apellidos.isEmpty()){
             throw new Exception("Los apellidos del cliente no pueden estar vacíos");
         }
-        this.apellidos = apellidos;
         if(cedula.isEmpty()){
             throw new Exception("La cédula del cliente no puede estar vacía");
         }
-        this.cedula = cedula;
         if(direccion.isEmpty()){
             throw new Exception("La dirección del cliente no puede estar vacía");
         }
-        this.direccion = direccion;
         if(email.isEmpty()){
             throw new Exception("El correo del cliente no puede estar vacío");
         }
-        this.email = email;
-        this.cuenta = cuenta;
+        return new Cliente(nombre,apellidos,cedula,direccion,email,cuenta);
     }
 
     public String getNombre() {
