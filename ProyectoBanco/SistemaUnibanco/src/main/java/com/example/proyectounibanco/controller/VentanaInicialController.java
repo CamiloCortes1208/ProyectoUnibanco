@@ -23,7 +23,7 @@ public class VentanaInicialController {
     }
 
     @FXML
-    void ingresarCliente(ActionEvent event) {
+    void ingresarCliente(ActionEvent event) throws IOException {
         cambiarVentana("VentanaLoginCliente.fxml","Ingreso Cliente",
                 400,250,botonCliente);
     }
