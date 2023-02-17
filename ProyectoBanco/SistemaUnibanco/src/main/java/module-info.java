@@ -2,7 +2,7 @@ module com.example.proyectounibanco {
     requires javafx.controls;
     requires javafx.fxml;
 
-
+    exports com.example.proyectounibanco.exception;
     opens com.example.proyectounibanco to javafx.fxml;
     exports com.example.proyectounibanco.clases;
     exports com.example.proyectounibanco;

@@ -1,8 +1,10 @@
 package com.example.proyectounibanco.controller;
 
 import static com.example.proyectounibanco.controller.AppController.INSTANCE;
+import static com.example.proyectounibanco.util.VentanaUtil.*;
 
 import com.example.proyectounibanco.clases.Cliente;
+import com.example.proyectounibanco.clases.Cuenta;
 import com.example.proyectounibanco.clases.TIPO_CUENTA;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -17,8 +19,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.List;
-
-import static com.example.proyectounibanco.util.VentanaUtil.cambiarVentana;
 
 public class VentanaListaClientesController {
 
@@ -82,29 +82,69 @@ public class VentanaListaClientesController {
                 null,null,null,null,null));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colNumCuenta.setCellValueFactory(new PropertyValueFactory<>("numCuenta"));
-        colSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
-        colTipoCuenta.setCellValueFactory(new PropertyValueFactory<>("tipoCuenta"));
+        colNumCuenta.setCellValueFactory(new PropertyValueFactory<>("Cuenta.numCuenta"));
+        colSaldo.setCellValueFactory(new PropertyValueFactory<>("Cuenta.saldo"));
+        colTipoCuenta.setCellValueFactory(new PropertyValueFactory<>("Cuenta.tipoCuenta"));
+
+        tablaCliente.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> llenarCampos(newValue));
 
         comboTipoCuenta.setItems(FXCollections.observableArrayList(TIPO_CUENTA.values()));
     }
+
+    private void llenarCampos(Cliente cliente) {
+        if (cliente != null) {
+            tfNombre.setText(cliente.getNombre());
+            tfApellidos.setText(cliente.getApellidos());
+            tfCedula.setText(cliente.getCedula());
+            tfDireccion.setText(cliente.getDireccion());
+            tfEmail.setText(cliente.getEmail());
+            tfNumCuenta.setText(cliente.getCuenta().getNumCuenta());
+            tfSaldo.setText(String.valueOf(cliente.getCuenta().getSaldo()));
+        }
+    }
+
+    private void limpiarCampos(){
+        tfNombre.setText("");
+        tfApellidos.setText("");
+        tfCedula.setText("");
+        tfDireccion.setText("");
+        tfEmail.setText("");
+        tfNumCuenta.setText("");
+        tfSaldo.setText("");
+    }
+
     @FXML
     void actualizar(ActionEvent event) {
 
     }
 
     @FXML
-    void agregar(ActionEvent event) {
-
+    void agregar(ActionEvent event) throws Exception {
+        Cliente cliente = new Cliente(tfNombre.getText(),tfApellidos.getText(),
+                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                new Cuenta(tfNumCuenta.getText(),Double.parseDouble(tfSaldo.getText()),
+                        comboTipoCuenta.getSelectionModel().getSelectedItem()));
+        if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()){
+            mostrarMensajeAlerta("El cliente ya se encuentra en el sistema");
+        }
+        else{
+            INSTANCE.getBanco().getAdministrador().registrarCliente(cliente);
+            limpiarCampos();
+            llenarTabla(INSTANCE.getBanco().getListaClientes());
+            mostrarMensajeInformacion("Cliente","El cliente "+cliente.getNombre()+
+                    " fue agregado al sistema");
+        }
     }
 
     @FXML
     void buscar(ActionEvent event) {
-
+        llenarTabla(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
+                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()));
     }
 
     @FXML

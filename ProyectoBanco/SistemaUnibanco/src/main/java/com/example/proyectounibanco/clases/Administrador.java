@@ -37,7 +37,7 @@ public class Administrador {
     }
 
     public void registrarCliente(Cliente cliente) throws ClienteExisteException {
-        if(filtrarClientePorCedula(cliente.getCedula()).isPresent()){
+        if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()){
             throw new ClienteExisteException();
         }
         INSTANCE.getBanco().getListaClientes().add(cliente);
@@ -53,7 +53,7 @@ public class Administrador {
         INSTANCE.getBanco().getListaClientes().remove(cliente.get());
     }
     public Optional<Cliente> filtrarClientePorCedula(String cedula){
-        return INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cedula);
+        return INSTANCE.getBanco().buscarClientePorCedula(cedula);
     }
     public List<Cliente> buscarCliente(String nombre,String apellidos, String cedula,
                                        String direccion, String email, String numCuenta,TIPO_CUENTA tipoCuenta){
@@ -61,4 +61,5 @@ public class Administrador {
                         apellidos,cedula,direccion,email,numCuenta, tipoCuenta))
                 .collect(Collectors.toUnmodifiableList());
     }
+
 }

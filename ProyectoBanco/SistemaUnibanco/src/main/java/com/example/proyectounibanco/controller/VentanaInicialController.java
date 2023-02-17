@@ -21,7 +21,6 @@ public class VentanaInicialController {
         cambiarVentana("VentanaLoginAdministrador.fxml","Ingreso Administrador",
                 400,250,botonAdministrador);
     }
-
     @FXML
     void ingresarCliente(ActionEvent event) throws IOException {
         cambiarVentana("VentanaLoginCliente.fxml","Ingreso Cliente",

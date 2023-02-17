@@ -1,7 +1,16 @@
 package com.example.proyectounibanco.clases;
 
+import com.example.proyectounibanco.exception.ClienteExisteException;
+import com.example.proyectounibanco.exception.ClienteNoExisteException;
+import com.example.proyectounibanco.exception.ValorRequeridoException;
+import com.example.proyectounibanco.util.ClienteUtil;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import static com.example.proyectounibanco.util.ClienteUtil.buscarPorCedula;
 
 public class Banco {
     private String nombre;
@@ -41,4 +50,8 @@ public class Banco {
         return administrador;
     }
 
+    public Optional<Cliente> buscarClientePorCedula(String cedula) {
+        return listaClientes.stream().filter(ClienteUtil.buscarPorCedula(cedula))
+                .findFirst();
+    }
 }
