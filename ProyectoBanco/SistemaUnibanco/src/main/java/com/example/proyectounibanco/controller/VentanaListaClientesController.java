@@ -7,18 +7,16 @@ import com.example.proyectounibanco.clases.Cliente;
 import com.example.proyectounibanco.clases.Cuenta;
 import com.example.proyectounibanco.clases.TIPO_CUENTA;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class VentanaListaClientesController {
 
@@ -41,19 +39,19 @@ public class VentanaListaClientesController {
     private TableColumn<Cliente, String> colNombre;
 
     @FXML
-    private TableColumn<Cliente,String> colNumCuenta;
+    private TableColumn<Cuenta,String> colNumCuenta;
 
     @FXML
-    private TableColumn<Cliente, Double> colSaldo;
+    private TableColumn<Cuenta, Double> colSaldo;
 
     @FXML
-    private TableColumn<Cliente, TIPO_CUENTA> colTipoCuenta;
+    private TableColumn<Cuenta, TIPO_CUENTA> colTipoCuenta;
 
     @FXML
     private ComboBox<TIPO_CUENTA> comboTipoCuenta;
 
     @FXML
-    private TableView<Cliente> tablaCliente;
+    private TableView<Object> tablaCliente;
 
     @FXML
     private TextField tfApellidos;
@@ -85,12 +83,13 @@ public class VentanaListaClientesController {
         colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colNumCuenta.setCellValueFactory(new PropertyValueFactory<>("Cuenta.numCuenta"));
-        colSaldo.setCellValueFactory(new PropertyValueFactory<>("Cuenta.saldo"));
-        colTipoCuenta.setCellValueFactory(new PropertyValueFactory<>("Cuenta.tipoCuenta"));
+
+        colNumCuenta.setCellValueFactory(new PropertyValueFactory<>("numCuenta"));
+        colSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
+        colTipoCuenta.setCellValueFactory(new PropertyValueFactory<>("tipoCuenta"));
 
         tablaCliente.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> llenarCampos(newValue));
+                .addListener((observable, oldValue, newValue) -> llenarCampos((Cliente) newValue));
 
         comboTipoCuenta.setItems(FXCollections.observableArrayList(TIPO_CUENTA.values()));
     }

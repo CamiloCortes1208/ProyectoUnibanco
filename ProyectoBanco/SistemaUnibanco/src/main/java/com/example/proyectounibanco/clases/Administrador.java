@@ -56,7 +56,8 @@ public class Administrador {
         return INSTANCE.getBanco().buscarClientePorCedula(cedula);
     }
     public List<Cliente> buscarCliente(String nombre,String apellidos, String cedula,
-                                       String direccion, String email, String numCuenta,TIPO_CUENTA tipoCuenta){
+                                       String direccion, String email, String numCuenta,
+                                       TIPO_CUENTA tipoCuenta){
         return INSTANCE.getBanco().getListaClientes().stream().filter(ClienteUtil.buscarPorTodo(nombre,
                         apellidos,cedula,direccion,email,numCuenta, tipoCuenta))
                 .collect(Collectors.toUnmodifiableList());
