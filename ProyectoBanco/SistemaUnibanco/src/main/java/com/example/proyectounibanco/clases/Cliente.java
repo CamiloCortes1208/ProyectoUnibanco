@@ -86,7 +86,9 @@ public class Cliente {
         return cuenta;
     }
 
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setCuenta(String numCuenta, double saldo, TIPO_CUENTA tipoCuenta) {
+        this.cuenta.setNumCuenta(numCuenta);
+        this.cuenta.setSaldo(saldo);
+        this.cuenta.setTipoCuenta(tipoCuenta);
     }
 }

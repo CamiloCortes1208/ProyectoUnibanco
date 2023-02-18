@@ -102,7 +102,23 @@ public class VentanaListaClientesController {
 
     @FXML
     void actualizar(ActionEvent event) {
-
+        if(tablaCliente.getSelectionModel().isEmpty()){
+            mostrarMensajeAlerta("Debe seleccionar un cliente a modificar");
+        }
+        else {
+            Cliente cliente = tablaCliente.getSelectionModel().getSelectedItem();
+            INSTANCE.getBanco().getListaClientes().remove(cliente);
+            cliente.setNombre(tfNombre.getText());
+            cliente.setApellidos(tfApellidos.getText());
+            cliente.setCedula(tfCedula.getText());
+            cliente.setDireccion(tfDireccion.getText());
+            cliente.setEmail(tfEmail.getText());
+            cliente.setCuenta(tfNumCuenta.getText(), Double.parseDouble(tfSaldo.getText()),
+                    comboTipoCuenta.getSelectionModel().getSelectedItem());
+            INSTANCE.getBanco().getListaClientes().add(cliente);
+            llenarTabla(INSTANCE.getBanco().getListaClientes());
+            mostrarMensajeInformacion("UNIBANCO","Cliente modificado con éxito");
+        }
     }
 
     @FXML
