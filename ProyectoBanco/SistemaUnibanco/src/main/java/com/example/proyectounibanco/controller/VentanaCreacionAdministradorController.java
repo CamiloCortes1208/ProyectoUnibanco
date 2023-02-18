@@ -26,7 +26,7 @@ public class VentanaCreacionAdministradorController {
     private TextField tfCorreo;
 
     @FXML
-    void crearCuenta(ActionEvent event) {
+    void crearCuenta(ActionEvent event) throws IOException {
         if(tfCorreo.getText().isEmpty()){
             mostrarMensajeAlerta("Debe ingresar un correo");
         }
@@ -41,6 +41,8 @@ public class VentanaCreacionAdministradorController {
             INSTANCE.getBanco().getAdministrador().setCorreo(tfCorreo.getText());
             INSTANCE.getBanco().getAdministrador().setContrasenia(tfContrasenia1.getText());
             mostrarMensajeInformacion("","Cuenta creada con éxito");
+            cambiarVentana("VentanaLoginAdministrador.fxml","Ingreso Administrador",
+                    400,250,botonRegresar);
         }
     }
 

@@ -33,4 +33,10 @@ public class VentanaUtil {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+    public static void mostrarMensajeConfirmacion(String titulo,String mensaje){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
 }

@@ -4,7 +4,6 @@ import static com.example.proyectounibanco.controller.AppController.INSTANCE;
 import static com.example.proyectounibanco.util.VentanaUtil.*;
 
 import com.example.proyectounibanco.clases.Cliente;
-import com.example.proyectounibanco.clases.Cuenta;
 import com.example.proyectounibanco.clases.TIPO_CUENTA;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -119,7 +118,10 @@ public class VentanaListaClientesController {
                     tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
                     tfNumCuenta.getText(),Double.parseDouble(tfSaldo.getText()),
                     comboTipoCuenta.getSelectionModel().getSelectedItem());
-            if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()) {
+            if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()
+            || INSTANCE.getBanco().getAdministrador().filtrarClientePorEmail(cliente.getEmail()).isPresent()
+            || INSTANCE.getBanco().getAdministrador().filtrarClientePorNumCuenta(cliente
+                    .getCuenta().getNumCuenta()).isPresent()){
                 mostrarMensajeAlerta("El cliente ya se encuentra en el sistema");
             }
             else{
@@ -148,7 +150,17 @@ public class VentanaListaClientesController {
 
     @FXML
     void eliminar(ActionEvent event) {
-
+        if(tablaCliente.getSelectionModel().isEmpty()){
+            mostrarMensajeAlerta("Debe seleccionar un cliente a eliminar");
+        }
+        else{
+            Cliente cliente = tablaCliente.getSelectionModel().getSelectedItem();
+            INSTANCE.getBanco().getListaClientes().remove(cliente);
+            tablaCliente.getSelectionModel().clearSelection();
+            llenarTabla(INSTANCE.getBanco().getListaClientes());
+            limpiarCampos();
+            mostrarMensajeInformacion("UNIBANCO","Cliente eliminado con exito");
+        }
     }
 
     @FXML
@@ -161,6 +173,5 @@ public class VentanaListaClientesController {
         tablaCliente.setItems(FXCollections.observableArrayList(listaClientes));
         tablaCliente.refresh();
     }
-
 }
 

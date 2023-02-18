@@ -55,6 +55,12 @@ public class Administrador {
     public Optional<Cliente> filtrarClientePorCedula(String cedula){
         return INSTANCE.getBanco().buscarClientePorCedula(cedula);
     }
+    public Optional<Cliente> filtrarClientePorEmail(String email){
+        return INSTANCE.getBanco().buscarClientePorEmail(email);
+    }
+    public Optional<Cliente> filtrarClientePorNumCuenta(String numCuenta){
+        return INSTANCE.getBanco().buscarClientePorNumCuenta(numCuenta);
+    }
     public List<Cliente> buscarCliente(String nombre,String apellidos, String cedula,
                                        String direccion, String email, String numCuenta,
                                        TIPO_CUENTA tipoCuenta){

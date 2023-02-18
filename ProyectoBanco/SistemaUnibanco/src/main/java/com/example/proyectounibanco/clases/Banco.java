@@ -51,7 +51,12 @@ public class Banco {
     }
 
     public Optional<Cliente> buscarClientePorCedula(String cedula) {
-        return listaClientes.stream().filter(ClienteUtil.buscarPorCedula(cedula))
-                .findFirst();
+        return listaClientes.stream().filter(ClienteUtil.buscarPorCedula(cedula)).findFirst();
+    }
+    public Optional<Cliente> buscarClientePorEmail(String email){
+        return listaClientes.stream().filter(ClienteUtil.buscarPorEmail(email)).findFirst();
+    }
+    public Optional<Cliente> buscarClientePorNumCuenta(String numCuenta){
+        return listaClientes.stream().filter(ClienteUtil.buscarPorNumCuenta(numCuenta)).findFirst();
     }
 }
