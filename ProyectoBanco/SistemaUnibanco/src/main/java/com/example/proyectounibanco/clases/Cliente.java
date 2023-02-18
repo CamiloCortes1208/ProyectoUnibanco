@@ -1,5 +1,7 @@
 package com.example.proyectounibanco.clases;
 
+import javafx.beans.property.StringProperty;
+
 public class Cliente {
     private String nombre;
     private String apellidos;
@@ -8,17 +10,19 @@ public class Cliente {
     private String email;
     private Cuenta cuenta;
 
-    public Cliente(String nombre, String apellidos, String cedula, String direccion, String email, Cuenta cuenta) {
+    public Cliente(String nombre, String apellidos, String cedula, String direccion, String email,
+                   String numCuenta, double saldo, TIPO_CUENTA tipoCuenta) throws Exception {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.cedula = cedula;
         this.direccion = direccion;
         this.email = email;
-        this.cuenta = cuenta;
+        this.cuenta = new Cuenta(numCuenta,saldo,tipoCuenta);
     }
 
     public static Cliente of(String nombre, String apellidos, String cedula,
-                    String direccion, String email, Cuenta cuenta) throws Exception {
+                    String direccion, String email,String numCuenta,
+                             double saldo, TIPO_CUENTA tipoCuenta ) throws Exception {
         if(nombre.isEmpty()){
             throw new Exception("El nombre del cliente no puede estar vacío");
         }
@@ -34,12 +38,13 @@ public class Cliente {
         if(email.isEmpty()){
             throw new Exception("El correo del cliente no puede estar vacío");
         }
-        return new Cliente(nombre,apellidos,cedula,direccion,email,cuenta);
+        return new Cliente(nombre,apellidos,cedula,direccion,email,numCuenta,saldo,tipoCuenta);
     }
 
     public String getNombre() {
         return nombre;
     }
+
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

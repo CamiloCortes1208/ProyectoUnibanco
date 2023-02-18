@@ -7,7 +7,6 @@ import com.example.proyectounibanco.clases.Cliente;
 import com.example.proyectounibanco.clases.Cuenta;
 import com.example.proyectounibanco.clases.TIPO_CUENTA;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class VentanaListaClientesController {
 
@@ -39,19 +37,10 @@ public class VentanaListaClientesController {
     private TableColumn<Cliente, String> colNombre;
 
     @FXML
-    private TableColumn<Cuenta,String> colNumCuenta;
-
-    @FXML
-    private TableColumn<Cuenta, Double> colSaldo;
-
-    @FXML
-    private TableColumn<Cuenta, TIPO_CUENTA> colTipoCuenta;
-
-    @FXML
     private ComboBox<TIPO_CUENTA> comboTipoCuenta;
 
     @FXML
-    private TableView<Object> tablaCliente;
+    private TableView<Cliente> tablaCliente;
 
     @FXML
     private TextField tfApellidos;
@@ -76,20 +65,15 @@ public class VentanaListaClientesController {
 
     @FXML
     public void initialize(){
-        llenarTabla(INSTANCE.getBanco().getAdministrador().buscarCliente(null,null,
-                null,null,null,null,null));
+        llenarTabla(INSTANCE.getBanco().getListaClientes());
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
         colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
         colDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        colNumCuenta.setCellValueFactory(new PropertyValueFactory<>("numCuenta"));
-        colSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
-        colTipoCuenta.setCellValueFactory(new PropertyValueFactory<>("tipoCuenta"));
-
         tablaCliente.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> llenarCampos((Cliente) newValue));
+                .addListener((observable, oldValue, newValue) -> llenarCampos(newValue));
 
         comboTipoCuenta.setItems(FXCollections.observableArrayList(TIPO_CUENTA.values()));
     }
@@ -103,6 +87,7 @@ public class VentanaListaClientesController {
             tfEmail.setText(cliente.getEmail());
             tfNumCuenta.setText(cliente.getCuenta().getNumCuenta());
             tfSaldo.setText(String.valueOf(cliente.getCuenta().getSaldo()));
+            comboTipoCuenta.setValue(cliente.getCuenta().getTipoCuenta());
         }
     }
 
@@ -123,27 +108,42 @@ public class VentanaListaClientesController {
 
     @FXML
     void agregar(ActionEvent event) throws Exception {
-        Cliente cliente = new Cliente(tfNombre.getText(),tfApellidos.getText(),
-                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
-                new Cuenta(tfNumCuenta.getText(),Double.parseDouble(tfSaldo.getText()),
-                        comboTipoCuenta.getSelectionModel().getSelectedItem()));
-        if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()){
-            mostrarMensajeAlerta("El cliente ya se encuentra en el sistema");
+        if(tfNombre.getText().isEmpty() || tfApellidos.getText().isEmpty() ||
+                tfCedula.getText().isEmpty() || tfDireccion.getText().isEmpty() ||
+                tfNumCuenta.getText().isEmpty() || tfSaldo.getText().isEmpty() ||
+                comboTipoCuenta.getSelectionModel().isEmpty()){
+            mostrarMensajeAlerta("Debe llenar todos los campos");
         }
         else{
-            INSTANCE.getBanco().getAdministrador().registrarCliente(cliente);
-            limpiarCampos();
-            llenarTabla(INSTANCE.getBanco().getListaClientes());
-            mostrarMensajeInformacion("Cliente","El cliente "+cliente.getNombre()+
-                    " fue agregado al sistema");
-        }
+            Cliente cliente = new Cliente(tfNombre.getText(),tfApellidos.getText(),
+                    tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                    tfNumCuenta.getText(),Double.parseDouble(tfSaldo.getText()),
+                    comboTipoCuenta.getSelectionModel().getSelectedItem());
+            if(INSTANCE.getBanco().getAdministrador().filtrarClientePorCedula(cliente.getCedula()).isPresent()) {
+                mostrarMensajeAlerta("El cliente ya se encuentra en el sistema");
+            }
+            else{
+                INSTANCE.getBanco().getAdministrador().registrarCliente(cliente);
+                limpiarCampos();
+                llenarTabla(INSTANCE.getBanco().getListaClientes());
+                mostrarMensajeInformacion("Cliente","El cliente "+cliente.getNombre()+
+                            " fue agregado al sistema");
+            }
+         }
+        limpiarCampos();
     }
 
     @FXML
     void buscar(ActionEvent event) {
+        if(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
+                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()).isEmpty()){
+            mostrarMensajeAlerta("El cliente no se encuentra en el sistema");
+        }
         llenarTabla(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
                 tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
                 tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()));
+        limpiarCampos();
     }
 
     @FXML
