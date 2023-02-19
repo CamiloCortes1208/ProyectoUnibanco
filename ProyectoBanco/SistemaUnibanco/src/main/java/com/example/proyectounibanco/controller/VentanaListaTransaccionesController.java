@@ -49,7 +49,6 @@ public class VentanaListaTransaccionesController {
     @FXML
     private ComboBox<TIPO_TRANSACCION> comboTipo;
 
-
     @FXML
     private TableView<Transaccion> tablaTransacciones;
 
@@ -90,10 +89,6 @@ public class VentanaListaTransaccionesController {
     private void llenarTabla(List<Transaccion> listaTransacciones){
         tablaTransacciones.setItems(FXCollections.observableArrayList(listaTransacciones));
         tablaTransacciones.refresh();
-    }
-    @FXML
-    void actualizar(ActionEvent event) {
-
     }
 
     @FXML
@@ -156,11 +151,6 @@ public class VentanaListaTransaccionesController {
                 Double.parseDouble(tfValor.getText()),
                 comboTipo.getSelectionModel().getSelectedItem()));
         limpiarCampos();
-    }
-
-    @FXML
-    void eliminar(ActionEvent event) {
-
     }
 
     @FXML

@@ -49,11 +49,9 @@
         </columns>
       </TableView>
       <Button fx:id="botonRegresar" layoutX="14.0" layoutY="420.0" mnemonicParsing="false" onAction="#regresar" text="Regresar" />
-      <HBox layoutX="182.0" layoutY="168.0" prefHeight="25.0" prefWidth="237.0">
+      <HBox layoutX="249.0" layoutY="169.0" prefHeight="25.0" prefWidth="110.0">
          <children>
             <Button mnemonicParsing="false" onAction="#agregar" text="Agregar" />
-            <Button mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
-            <Button mnemonicParsing="false" onAction="#actualizar" text="Actualizar" />
             <Button mnemonicParsing="false" onAction="#buscar" text="Buscar" />
          </children>
       </HBox>
