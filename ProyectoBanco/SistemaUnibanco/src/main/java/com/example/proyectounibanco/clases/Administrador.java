@@ -68,5 +68,30 @@ public class Administrador {
                         apellidos,cedula,direccion,email,numCuenta, tipoCuenta))
                 .collect(Collectors.toUnmodifiableList());
     }
+    public void depositar(Cuenta cuenta,Transaccion transaccion){
+        double saldoDeposito = transaccion.getValor();
+        cuenta.setSaldo(saldoDeposito+cuenta.getSaldo());
+        transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.EXITOSA);
+        INSTANCE.getBanco().getListaTransacciones().add(transaccion);
+    }
+    public void retirar(Cuenta cuenta,Transaccion transaccion) throws Exception{
+        double saldoRetiro = transaccion.getValor();
+        if(cuenta.getSaldo()<saldoRetiro){
+            transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.RECHAZADA);
+        }
+        if (cuenta.getSaldo() == 0){
+            transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.SIN_FONDOS);
+        }
+        else{
+            cuenta.setSaldo(cuenta.getSaldo() - saldoRetiro);
+            transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.EXITOSA);
+            INSTANCE.getBanco().getListaTransacciones().add(transaccion);
+        }
+    }
+    public double consultarSaldo(Cuenta cuenta,Transaccion transaccion){
+        transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.EXITOSA);
+        INSTANCE.getBanco().getListaTransacciones().add(transaccion);
+        return cuenta.getSaldo();
+    }
 
 }

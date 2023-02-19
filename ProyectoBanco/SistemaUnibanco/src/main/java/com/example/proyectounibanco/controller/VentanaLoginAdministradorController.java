@@ -19,9 +19,6 @@ public class VentanaLoginAdministradorController {
     private Button botonRegistrar;
 
     @FXML
-    private Button botonRegresar;
-
-    @FXML
     private PasswordField tfContrasenia;
 
     @FXML
@@ -51,11 +48,4 @@ public class VentanaLoginAdministradorController {
         cambiarVentana("VentanaCreacionAdministrador.fxml","Crea tu cuenta",
                 400,250,botonRegistrar);
     }
-
-    @FXML
-    void regresar(ActionEvent event) throws IOException {
-        cambiarVentana("VentanaInicial.fxml","UNIBANCO",
-                310,130,botonRegresar);
-    }
-
 }

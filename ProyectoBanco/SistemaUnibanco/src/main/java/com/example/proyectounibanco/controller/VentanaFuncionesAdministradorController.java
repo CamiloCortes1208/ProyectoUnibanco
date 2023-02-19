@@ -14,7 +14,7 @@ public class VentanaFuncionesAdministradorController {
     private Button botonClientes;
 
     @FXML
-    private Button botonCuentas;
+    private Button botonTransacciones;
 
     @FXML
     private Button botonRegresar;
@@ -32,9 +32,9 @@ public class VentanaFuncionesAdministradorController {
     }
 
     @FXML
-    void verCuentas(ActionEvent event) {
-
+    void verTransacciones(ActionEvent event) throws IOException {
+        cambiarVentana("VentanaListaTransacciones.fxml",
+                "Transacciones",600,460,botonTransacciones);
     }
-
 }
 

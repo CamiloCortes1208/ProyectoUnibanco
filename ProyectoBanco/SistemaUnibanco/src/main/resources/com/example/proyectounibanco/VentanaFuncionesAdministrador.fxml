@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectounibanco.controller.VentanaFuncionesAdministradorController">
    <children>
-      <Button fx:id="botonCuentas" layoutX="136.0" layoutY="95.0" mnemonicParsing="false" onAction="#verCuentas" text="Ver Cuentas" />
+      <Button fx:id="botonTransacciones" layoutX="120.0" layoutY="94.0" mnemonicParsing="false" onAction="#verTransacciones" text="Ver Transacciones" />
       <Button fx:id="botonClientes" layoutX="136.0" layoutY="56.0" mnemonicParsing="false" onAction="#verClientes" text="Ver Clientes" />
       <Label layoutX="125.0" layoutY="22.0" text="¿Qué desea hacer?">
          <font>

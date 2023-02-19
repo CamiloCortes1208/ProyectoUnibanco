@@ -11,8 +11,8 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.
-                getResource("VentanaInicial.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),310, 130);
+                getResource("VentanaLoginAdministrador.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),400, 250);
         stage.setTitle("UNIBANCO");
         stage.setScene(scene);
         stage.show();

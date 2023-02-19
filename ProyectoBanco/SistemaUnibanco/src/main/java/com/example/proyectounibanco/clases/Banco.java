@@ -16,6 +16,7 @@ public class Banco {
     private String nombre;
     private List<Cliente> listaClientes = new ArrayList<>();
     private List<Cuenta> listaCuentas = new ArrayList<>();
+    private List<Transaccion> listaTransacciones = new ArrayList<>();
     private final Administrador administrador;
 
     public Banco(Administrador administrador) {
@@ -50,6 +51,13 @@ public class Banco {
         return administrador;
     }
 
+    public List<Transaccion> getListaTransacciones() {
+        return listaTransacciones;
+    }
+
+    public void setListaTransacciones(List<Transaccion> listaTransacciones) {
+        this.listaTransacciones = listaTransacciones;
+    }
     public Optional<Cliente> buscarClientePorCedula(String cedula) {
         return listaClientes.stream().filter(ClienteUtil.buscarPorCedula(cedula)).findFirst();
     }
