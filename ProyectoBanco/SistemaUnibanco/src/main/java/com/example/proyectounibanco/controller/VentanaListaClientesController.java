@@ -98,6 +98,7 @@ public class VentanaListaClientesController {
         tfEmail.setText("");
         tfNumCuenta.setText("");
         tfSaldo.setText("");
+        comboTipoCuenta.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -154,15 +155,25 @@ public class VentanaListaClientesController {
 
     @FXML
     void buscar(ActionEvent event) {
-        if(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
-                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
-                tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()).isEmpty()){
-            mostrarMensajeAlerta("El cliente no se encuentra en el sistema");
+        if(tfNombre.getText().isEmpty() && tfApellidos.getText().isEmpty() && tfCedula.getText().isEmpty()
+                && tfDireccion.getText().isEmpty() && tfEmail.getText().isEmpty()
+                && tfNumCuenta.getText().isEmpty() && comboTipoCuenta.getSelectionModel().isEmpty()){
+            mostrarMensajeAlerta("Debe llenar al menos un campo para buscar");
         }
-        llenarTabla(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
-                tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
-                tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()));
-        limpiarCampos();
+        else{
+            if(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
+                    tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                    tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()).isEmpty()){
+                mostrarMensajeAlerta("El cliente no se encuentra en el sistema");
+                limpiarCampos();
+            }
+            else{
+                llenarTabla(INSTANCE.getBanco().getAdministrador().buscarCliente(tfNombre.getText(),tfApellidos.getText(),
+                        tfCedula.getText(),tfDireccion.getText(),tfEmail.getText(),
+                        tfNumCuenta.getText(),comboTipoCuenta.getSelectionModel().getSelectedItem()));
+                limpiarCampos();
+            }
+        }
     }
 
     @FXML

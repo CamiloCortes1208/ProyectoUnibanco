@@ -69,10 +69,12 @@ public class Administrador {
                         apellidos,cedula,direccion,email,numCuenta, tipoCuenta))
                 .collect(Collectors.toUnmodifiableList());
     }
-    public List<Transaccion> buscarTransaccion(String codigoTransaccion,double valor,
-                                               TIPO_TRANSACCION tipoTransaccion){
+    public Optional<Transaccion> filtrarTransaccionPorCodigoTransaccion(String codigoTransaccion){
+        return INSTANCE.getBanco().buscarTransaccionPorCodigoTransaccion(codigoTransaccion);
+    }
+    public List<Transaccion> buscarTransaccion(String codigoTransaccion, TIPO_TRANSACCION tipoTransaccion){
         return INSTANCE.getBanco().getListaTransacciones().stream().filter(TransaccionUtil.buscarPorTodo(
-                codigoTransaccion,valor,tipoTransaccion
+                codigoTransaccion,tipoTransaccion
                 ))
                 .collect(Collectors.toUnmodifiableList());
     }

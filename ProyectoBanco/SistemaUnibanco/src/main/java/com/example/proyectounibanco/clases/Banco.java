@@ -4,6 +4,7 @@ import com.example.proyectounibanco.exception.ClienteExisteException;
 import com.example.proyectounibanco.exception.ClienteNoExisteException;
 import com.example.proyectounibanco.exception.ValorRequeridoException;
 import com.example.proyectounibanco.util.ClienteUtil;
+import com.example.proyectounibanco.util.TransaccionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,5 +67,9 @@ public class Banco {
     }
     public Optional<Cliente> buscarClientePorNumCuenta(String numCuenta){
         return listaClientes.stream().filter(ClienteUtil.buscarPorNumCuenta(numCuenta)).findFirst();
+    }
+    public Optional<Transaccion> buscarTransaccionPorCodigoTransaccion(String codigoTransaccion){
+        return listaTransacciones.stream().filter(TransaccionUtil
+                .buscarPorCodigoTransaccion(codigoTransaccion)).findFirst();
     }
 }

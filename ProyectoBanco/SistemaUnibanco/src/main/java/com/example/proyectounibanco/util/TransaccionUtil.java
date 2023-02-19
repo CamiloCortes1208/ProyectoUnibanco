@@ -23,17 +23,13 @@ public class TransaccionUtil {
     public static Predicate<Transaccion> buscarPorEstadoTransaccion(ESTADO_TRANSACCION estadoTransaccion){
         return transaccion -> transaccion.getEstadoTransaccion().equals(estadoTransaccion);
     }
-    public static Predicate<Transaccion> buscarPorTodo(String codigoTransaccion,double valor,
-                                                       TIPO_TRANSACCION tipoTransaccion) {
+    public static Predicate<Transaccion> buscarPorTodo(String codigoTransaccion, TIPO_TRANSACCION tipoTransaccion) {
         Predicate<Transaccion> predicado = transaccion -> true;
         if (codigoTransaccion != null && !codigoTransaccion.isEmpty()) {
             predicado = predicado.and(buscarPorCodigoTransaccion(codigoTransaccion));
         }
         if (tipoTransaccion != null) {
             predicado = predicado.and(buscarPorTipoTransaccion(tipoTransaccion));
-        }
-        if (!String.valueOf(valor).isEmpty()){
-            predicado = predicado.and(buscarPorValor(valor));
         }
         return predicado;
     }

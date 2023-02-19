@@ -85,6 +85,7 @@ public class VentanaListaTransaccionesController {
         tfCodigo.setText("");
         tfValor.setText("");
         tfNumCuenta.setText("");
+        comboTipo.getSelectionModel().clearSelection();
     }
     private void llenarTabla(List<Transaccion> listaTransacciones){
         tablaTransacciones.setItems(FXCollections.observableArrayList(listaTransacciones));
@@ -111,30 +112,38 @@ public class VentanaListaTransaccionesController {
                 Transaccion transaccion = new Transaccion(tfCodigo.getText(),Double.parseDouble(tfValor.getText()),hora,
                         comboTipo.getSelectionModel().getSelectedItem(),fecha,ESTADO_TRANSACCION.NEUTRAL);
                 TIPO_TRANSACCION tipoTransaccion = comboTipo.getSelectionModel().getSelectedItem();
-                if(tipoTransaccion.equals(RETIRO)){
-                    INSTANCE.getBanco().getAdministrador().retirar(cuenta,transaccion);
-                    if(transaccion.getEstadoTransaccion().equals(RECHAZADA)){
-                        mostrarMensajeAlerta("Transacción rechazada, sin suficientes fondos");
+                if((INSTANCE.getBanco().getAdministrador().filtrarTransaccionPorCodigoTransaccion(transaccion
+                        .getCodigoTransaccion())).isPresent()){
+                    mostrarMensajeAlerta("No se pueden hacer dos transacciones con el mismo código");
+                }
+                else{
+                    if(tipoTransaccion.equals(RETIRO)){
+                        INSTANCE.getBanco().getAdministrador().retirar(cuenta,transaccion);
+                        if(transaccion.getEstadoTransaccion().equals(RECHAZADA)){
+                            mostrarMensajeAlerta("Transacción rechazada, sin suficientes fondos");
+                        }
+                        else if (transaccion.getEstadoTransaccion().equals(SIN_FONDOS)){
+                            mostrarMensajeAlerta("Transacción rechazada, sin fondos");
+                        }
+                        else if(transaccion.getEstadoTransaccion().equals(EXITOSA)){
+                            mostrarMensajeInformacion("Transacción","Transacción exitosa");
+                            limpiarCampos();
+                            llenarTabla(INSTANCE.getBanco().getListaTransacciones());
+                        }
                     }
-                    else if (transaccion.getEstadoTransaccion().equals(SIN_FONDOS)){
-                        mostrarMensajeAlerta("Transacción rechazada, sin fondos");
-                    }
-                    else if(transaccion.getEstadoTransaccion().equals(EXITOSA)){
+                    else if(tipoTransaccion.equals(DEPOSITO)){
+                        INSTANCE.getBanco().getAdministrador().depositar(cuenta,transaccion);
                         mostrarMensajeInformacion("Transacción","Transacción exitosa");
+                        llenarTabla(INSTANCE.getBanco().getListaTransacciones());
+                        limpiarCampos();
+                    }
+                    else if(tipoTransaccion.equals(CONSULTA)){
+                        double saldoMostrar = INSTANCE.getBanco().getAdministrador().consultarSaldo(cuenta,transaccion);
+                        mostrarMensajeInformacion("Saldo","Su saldo es "+saldoMostrar);
                         limpiarCampos();
                         llenarTabla(INSTANCE.getBanco().getListaTransacciones());
+                        limpiarCampos();
                     }
-                }
-                else if(tipoTransaccion.equals(DEPOSITO)){
-                    INSTANCE.getBanco().getAdministrador().depositar(cuenta,transaccion);
-                    mostrarMensajeInformacion("Transacción","Transacción exitosa");
-                    llenarTabla(INSTANCE.getBanco().getListaTransacciones());
-                }
-                else if(tipoTransaccion.equals(CONSULTA)){
-                    double saldoMostrar = INSTANCE.getBanco().getAdministrador().consultarSaldo(cuenta,transaccion);
-                    mostrarMensajeInformacion("Saldo","Su saldo es "+saldoMostrar);
-                    limpiarCampos();
-                    llenarTabla(INSTANCE.getBanco().getListaTransacciones());
                 }
             }
         }
@@ -142,15 +151,23 @@ public class VentanaListaTransaccionesController {
 
     @FXML
     void buscar(ActionEvent event) {
-        if(INSTANCE.getBanco().getAdministrador().buscarTransaccion(tfCodigo.getText(),
-                Double.parseDouble(tfValor.getText()),
-                comboTipo.getSelectionModel().getSelectedItem()).isEmpty()){
-            mostrarMensajeAlerta("La transacción no se encuentra registrada en el sistema");
+        if(tfCodigo.getText().isEmpty() && tfNumCuenta.getText().isEmpty() &&
+        tfValor.getText().isEmpty() && comboTipo.getSelectionModel().isEmpty()){
+            mostrarMensajeAlerta("Debe llenar al menos un campo para buscar");
         }
-        llenarTabla(INSTANCE.getBanco().getAdministrador().buscarTransaccion(tfCodigo.getText(),
-                Double.parseDouble(tfValor.getText()),
-                comboTipo.getSelectionModel().getSelectedItem()));
-        limpiarCampos();
+        else{
+            if(INSTANCE.getBanco().getAdministrador().buscarTransaccion(tfCodigo.getText(),
+                    comboTipo.getSelectionModel().getSelectedItem()).isEmpty()){
+                mostrarMensajeAlerta("La transacción no se encuentra registrada en el sistema");
+                limpiarCampos();
+            }
+            else{
+                llenarTabla(INSTANCE.getBanco().getAdministrador().buscarTransaccion(tfCodigo.getText(),
+                        comboTipo.getSelectionModel().getSelectedItem()));
+                limpiarCampos();
+            }
+        }
+
     }
 
     @FXML
