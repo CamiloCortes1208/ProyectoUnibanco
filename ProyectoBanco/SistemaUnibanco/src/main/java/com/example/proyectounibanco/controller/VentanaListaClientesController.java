@@ -117,6 +117,7 @@ public class VentanaListaClientesController {
                     comboTipoCuenta.getSelectionModel().getSelectedItem());
             INSTANCE.getBanco().getListaClientes().add(cliente);
             llenarTabla(INSTANCE.getBanco().getListaClientes());
+            limpiarCampos();
             mostrarMensajeInformacion("UNIBANCO","Cliente modificado con éxito");
         }
     }

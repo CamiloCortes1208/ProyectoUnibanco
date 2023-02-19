@@ -7,7 +7,6 @@ public class Cuenta {
     private String numCuenta;
     private double saldo;
     private TIPO_CUENTA tipoCuenta;
-    private List<Transaccion> listaTransacciones = new ArrayList<>();
 
     public Cuenta(String numCuenta, double saldo, TIPO_CUENTA tipoCuenta) throws Exception {
         if(numCuenta.isEmpty()){
@@ -45,11 +44,4 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public List<Transaccion> getListaTransacciones() {
-        return listaTransacciones;
-    }
-
-    public void setListaTransacciones(List<Transaccion> listaTransacciones) {
-        this.listaTransacciones = listaTransacciones;
-    }
 }

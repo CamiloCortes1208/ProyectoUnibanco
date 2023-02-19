@@ -5,6 +5,7 @@ import com.example.proyectounibanco.exception.ClienteExisteException;
 import com.example.proyectounibanco.exception.ClienteNoExisteException;
 import com.example.proyectounibanco.exception.ValorRequeridoException;
 import com.example.proyectounibanco.util.ClienteUtil;
+import com.example.proyectounibanco.util.TransaccionUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -68,18 +69,25 @@ public class Administrador {
                         apellidos,cedula,direccion,email,numCuenta, tipoCuenta))
                 .collect(Collectors.toUnmodifiableList());
     }
+    public List<Transaccion> buscarTransaccion(String codigoTransaccion,double valor,
+                                               TIPO_TRANSACCION tipoTransaccion){
+        return INSTANCE.getBanco().getListaTransacciones().stream().filter(TransaccionUtil.buscarPorTodo(
+                codigoTransaccion,valor,tipoTransaccion
+                ))
+                .collect(Collectors.toUnmodifiableList());
+    }
     public void depositar(Cuenta cuenta,Transaccion transaccion){
         double saldoDeposito = transaccion.getValor();
         cuenta.setSaldo(saldoDeposito+cuenta.getSaldo());
         transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.EXITOSA);
         INSTANCE.getBanco().getListaTransacciones().add(transaccion);
     }
-    public void retirar(Cuenta cuenta,Transaccion transaccion) throws Exception{
+    public void retirar(Cuenta cuenta,Transaccion transaccion){
         double saldoRetiro = transaccion.getValor();
         if(cuenta.getSaldo()<saldoRetiro){
             transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.RECHAZADA);
         }
-        if (cuenta.getSaldo() == 0){
+        else if(cuenta.getSaldo() == 0){
             transaccion.setEstadoTransaccion(ESTADO_TRANSACCION.SIN_FONDOS);
         }
         else{

@@ -30,7 +30,7 @@ public class ClienteUtil {
     public static Predicate<Cliente> buscarPorTodo(String nombre, String apellidos, String cedula,
                                                    String direccion,String email, String numCuenta,
                                                    TIPO_CUENTA tipoCuenta) {
-        Predicate<Cliente> predicado = empleado -> true;
+        Predicate<Cliente> predicado = cliente -> true;
         if (nombre != null && !nombre.isEmpty()) {
             predicado = predicado.and(buscarPorNombre(nombre));
         }
